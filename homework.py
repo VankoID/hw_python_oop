@@ -1,17 +1,26 @@
 class InfoMessage:
     """Информационное сообщение о тренировке."""
-    pass
+    def show_training_info(self):
+
+    def get_message(self):
+        print(f'Тип тренировки: {training_type};'
+              f'Длительность: {duration} ч.;'
+              f'Дистанция: {distance} км;'
+              f'Ср. скорость: {speed} км/ч;'
+              f'Потрачено ккал: {calories}.')
 
 
 class Training:
     """Базовый класс тренировки."""
-
     def __init__(self,
                  action: int,
                  duration: float,
                  weight: float,
                  ) -> None:
-        pass
+        self.action = action
+        self.duration = duration
+        self.weight = weight
+
 
     def get_distance(self) -> float:
         """Получить дистанцию в км."""
