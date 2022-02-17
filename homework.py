@@ -1,8 +1,8 @@
 from dataclasses import dataclass
-from typing import List, Dict
+from typing import List, Dict, Union, Type
 
 
-@dataclass
+@dataclass(repr=False, eq=False)
 class InfoMessage:
     """Информационное сообщение о тренировке."""
     training_type: str
@@ -47,7 +47,8 @@ class Training:
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        raise NotImplementedError('Class is not defined')
+        raise NotImplementedError('Method for "get_spent_calories" in'
+                                  'subclasses is not defined')
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -135,9 +136,9 @@ class Swimming(Training):
         return calories
 
 
-def read_package(workout_type: str, data: List[float]) -> Training:
+def read_package(workout_type: str, data: List[Union[int, float]]) -> Training:
     """Прочитать данные полученные от датчиков."""
-    CustomDict = Dict[str, List[float]]
+    CustomDict = Dict[str, Type[Training]]
     active_dict: CustomDict = {'SWM': Swimming, 'RUN': Running,
                                'WLK': SportsWalking}
     return active_dict[workout_type](*data)
@@ -145,7 +146,7 @@ def read_package(workout_type: str, data: List[float]) -> Training:
 
 def main(training: Training) -> None:
     """Главная функция."""
-    info: str = training.show_training_info()
+    info: InfoMessage = training.show_training_info()
     print(info.get_message())
 
 
